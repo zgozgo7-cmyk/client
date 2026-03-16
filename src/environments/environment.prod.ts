@@ -1,4 +1,4 @@
 export const environment = {
     production: false,
-    wsUrl: 'http://localhost:3000',
+    wsUrl: 'https://server-cbrk.onrender.com:3000',
 };

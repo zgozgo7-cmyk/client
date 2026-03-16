@@ -1,7 +1,7 @@
 import { Injectable, NgZone } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { io, Socket } from 'socket.io-client';
-import { environment } from '../environments/environment';
+import { environment } from '../environments/environment.prod';
 
 export type Team = 'A' | 'B';
 
@@ -11,48 +11,48 @@ export interface TeamMember {
 }
 
 export interface GameState {
-    buzzEnabled: boolean;
-    current: null | {
-        team: Team;
-        name: string;
-        responderId: string;
-        turnEndsAt: number;
+  buzzEnabled: boolean;
+  current: null | {
+    team: Team;
+    name: string;
+    responderId: string;
+    turnEndsAt: number;
     duration?: number;
-    };
-    scores: { A: number; B: number };
+  };
+  scores: { A: number; B: number };
   timerDuration: number;
   teams: {
     A: TeamMember[];
     B: TeamMember[];
   };
-    serverTime: number;
+  serverTime: number;
 }
 
 @Injectable({ providedIn: 'root' })
 export class WsService {
   private socket?: Socket;
-    private reconnectTimer?: any;
+  private reconnectTimer?: any;
   private pendingRegistration: (() => void) | null = null;
   private registeredRole: 'manager' | 'player' | null = null;
   private registeredTeam?: 'A' | 'B';
   private registeredName?: string;
 
-    readonly connected$ = new BehaviorSubject<boolean>(false);
-    readonly state$ = new BehaviorSubject<GameState>({
-        buzzEnabled: false,
-        current: null,
-        scores: { A: 0, B: 0 },
+  readonly connected$ = new BehaviorSubject<boolean>(false);
+  readonly state$ = new BehaviorSubject<GameState>({
+    buzzEnabled: false,
+    current: null,
+    scores: { A: 0, B: 0 },
     timerDuration: 10,
     teams: { A: [], B: [] },
-        serverTime: Date.now(),
-    });
+    serverTime: Date.now(),
+  });
 
-    readonly myId$ = new BehaviorSubject<string | null>(null);
-    readonly events$ = new Subject<any>();
+  readonly myId$ = new BehaviorSubject<string | null>(null);
+  readonly events$ = new Subject<any>();
 
-    constructor(private zone: NgZone) { }
+  constructor(private zone: NgZone) { }
 
-    connect() {
+  connect() {
     if (this.socket?.connected) return;
 
     this.socket = io(environment.wsUrl, {
@@ -79,16 +79,16 @@ export class WsService {
 
     this.socket.on('disconnect', () => {
       this.zone.run(() => {
-            this.connected$.next(false);
-            this.scheduleReconnect();
+        this.connected$.next(false);
+        this.scheduleReconnect();
       });
-        });
+    });
 
     this.socket.on('connect_error', () => {
       this.zone.run(() => {
-            this.connected$.next(false);
-            this.scheduleReconnect();
-        });
+        this.connected$.next(false);
+        this.scheduleReconnect();
+      });
     });
 
     this.socket.on('HELLO', (data: { id: string }) => {
@@ -101,18 +101,18 @@ export class WsService {
 
     this.socket.onAny((event, data) => {
       this.zone.run(() => this.events$.next({ type: event, data }));
-            });
-    }
+    });
+  }
 
-    private scheduleReconnect() {
-        if (this.reconnectTimer) return;
-        this.reconnectTimer = setTimeout(() => {
-            this.reconnectTimer = undefined;
-            this.connect();
+  private scheduleReconnect() {
+    if (this.reconnectTimer) return;
+    this.reconnectTimer = setTimeout(() => {
+      this.reconnectTimer = undefined;
+      this.connect();
     }, 2000);
-    }
+  }
 
-    send(obj: any) {
+  send(obj: any) {
     if (!this.socket?.connected) {
       console.warn('Socket not connected, cannot send:', obj);
       return false;
@@ -120,13 +120,13 @@ export class WsService {
     console.log('Sending message:', obj);
     this.socket.emit('message', obj);
     return true;
-    }
+  }
 
-    registerManager() {
+  registerManager() {
     this.registeredRole = 'manager';
     this.registeredTeam = undefined;
     this.registeredName = undefined;
-    
+
     if (this.socket?.connected) {
       this.send({ type: 'REGISTER', role: 'manager' });
     } else {
@@ -135,13 +135,13 @@ export class WsService {
         this.send({ type: 'REGISTER', role: 'manager' });
       };
     }
-    }
+  }
 
-    registerPlayer(team: 'A' | 'B', name: string) {
+  registerPlayer(team: 'A' | 'B', name: string) {
     this.registeredRole = 'player';
     this.registeredTeam = team;
     this.registeredName = name;
-    
+
     if (this.socket?.connected) {
       this.send({ type: 'REGISTER', role: 'player', team, name });
     } else {
@@ -150,13 +150,13 @@ export class WsService {
         this.send({ type: 'REGISTER', role: 'player', team, name });
       };
     }
-    }
+  }
 
-    buzz() {
-        this.send({ type: 'BUZZ' });
-    }
+  buzz() {
+    this.send({ type: 'BUZZ' });
+  }
 
-    managerCmd(cmd: string, extra: any = {}) {
+  managerCmd(cmd: string, extra: any = {}) {
     const msg = { type: 'MANAGER_CMD', cmd, ...extra };
     console.log('Sending manager command:', msg, 'Connected:', this.socket?.connected);
     this.send(msg);
@@ -167,5 +167,5 @@ export class WsService {
       this.socket.disconnect();
       this.socket = undefined;
     }
-    }
+  }
 }
