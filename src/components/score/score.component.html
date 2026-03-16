@@ -1,0 +1,35 @@
+<div class="score-page">
+  <div class="score-header">
+    <h1>🏆 Scores</h1>
+    <div class="connection-status" [class.connected]="connected()" [class.disconnected]="!connected()">
+      {{ connected() ? '● Connected' : '○ Disconnected' }}
+    </div>
+  </div>
+
+  <div class="scores-container">
+    <div class="score-card team-a-card">
+      <div class="team-header">
+        <div class="team-icon">A</div>
+        <div class="team-label">Team A</div>
+      </div>
+      <div class="score-value-large">{{ state().scores.A }}</div>
+    </div>
+
+    <div class="vs-divider">VS</div>
+
+    <div class="score-card team-b-card">
+      <div class="team-header">
+        <div class="team-icon">B</div>
+        <div class="team-label">Team B</div>
+      </div>
+      <div class="score-value-large">{{ state().scores.B }}</div>
+    </div>
+  </div>
+
+  <div class="current-turn-info" *ngIf="state().current as c">
+    <div class="turn-label">Currently Answering:</div>
+    <div class="responder-name">{{ c.name }}</div>
+    <div class="responder-team">Team {{ c.team }}</div>
+  </div>
+</div>
+

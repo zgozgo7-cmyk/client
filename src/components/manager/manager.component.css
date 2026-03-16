@@ -1,0 +1,400 @@
+.wrap {
+  font-family: system-ui, -apple-system, sans-serif;
+  padding: 16px;
+  max-width: 1200px;
+  margin: 0 auto;
+  background: #f5f5f5;
+  min-height: 100vh;
+}
+
+.header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+h1 {
+  margin: 0;
+  color: #333;
+  font-size: 28px;
+}
+
+.score-link {
+  padding: 10px 20px;
+  background: #2196f3;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  transition: background 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.score-link:hover {
+  background: #1976d2;
+}
+
+.row {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.card {
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  flex: 1;
+  min-width: 280px;
+}
+
+.title {
+  opacity: 0.7;
+  font-size: 14px;
+  margin-bottom: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.value {
+  font-size: 16px;
+}
+
+.ok {
+  color: #2e7d32;
+  font-weight: 600;
+}
+
+.bad {
+  color: #c62828;
+  font-weight: 600;
+}
+
+.score-display {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.score-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.team-label {
+  font-weight: 600;
+  min-width: 80px;
+}
+
+.score-value {
+  font-size: 24px;
+  font-weight: bold;
+  min-width: 40px;
+  text-align: center;
+}
+
+.score-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  background: white;
+  cursor: pointer;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.score-btn:hover {
+  background: #f5f5f5;
+}
+
+.team-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.team-column h3 {
+  margin: 0 0 12px 0;
+  color: #333;
+  font-size: 18px;
+}
+
+.member-list {
+  min-height: 100px;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  padding: 12px;
+  background: #fafafa;
+}
+
+.member-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  margin-bottom: 8px;
+  background: white;
+  border-radius: 6px;
+  border: 1px solid #e0e0e0;
+}
+
+.member-name {
+  font-weight: 500;
+  color: #333;
+}
+
+.link-btn {
+  padding: 4px 8px;
+  background: #2196f3;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.link-btn:hover {
+  background: #1976d2;
+}
+
+.empty {
+  color: #999;
+  font-style: italic;
+  text-align: center;
+  padding: 20px;
+}
+
+
+.hint {
+  margin-top: 12px;
+  padding: 12px;
+  background: #e3f2fd;
+  border-radius: 6px;
+  font-size: 13px;
+  color: #1976d2;
+}
+
+.round-status {
+  margin-bottom: 20px;
+}
+
+.status-text {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 8px;
+}
+
+.buzz-status {
+  display: inline-block;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: 600;
+  background: #ffebee;
+  color: #c62828;
+}
+
+.buzz-status.enabled {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.current-turn {
+  padding: 16px;
+  background: #fff3e0;
+  border-radius: 8px;
+  border: 2px solid #ff9800;
+}
+
+.turn-team {
+  font-size: 20px;
+  font-weight: bold;
+  color: #e65100;
+  margin-bottom: 4px;
+}
+
+.turn-name-wrapper {
+  margin-bottom: 8px;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.turn-name-highlight {
+  font-size: 32px;
+  font-weight: 900;
+  color: #e65100;
+  padding: 6px 16px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, rgba(255, 183, 77, 0.3), rgba(255, 152, 0, 0.3));
+  border: 2px solid rgba(255, 152, 0, 0.5);
+  display: inline-block;
+  animation: highlight-pulse 2s ease-in-out infinite;
+  text-shadow: 0 2px 4px rgba(230, 81, 0, 0.2);
+  box-shadow: 0 4px 8px rgba(255, 152, 0, 0.2);
+}
+
+@keyframes highlight-pulse {
+  0%, 100% {
+    background: linear-gradient(135deg, rgba(255, 183, 77, 0.3), rgba(255, 152, 0, 0.3));
+    transform: scale(1);
+    box-shadow: 0 4px 8px rgba(255, 152, 0, 0.2);
+  }
+  50% {
+    background: linear-gradient(135deg, rgba(255, 183, 77, 0.5), rgba(255, 152, 0, 0.5));
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(255, 152, 0, 0.4);
+  }
+}
+
+.turn-name-text {
+  font-size: 18px;
+  color: #333;
+}
+
+.time-left {
+  font-size: 16px;
+  color: #f57c00;
+  font-weight: 600;
+}
+
+.control-buttons {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  padding: 12px 24px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: #2196f3;
+  color: white;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: #1976d2;
+}
+
+.btn-secondary {
+  background: #757575;
+  color: white;
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: #616161;
+}
+
+.btn-success {
+  background: #4caf50;
+  color: white;
+}
+
+.btn-success:hover:not(:disabled) {
+  background: #45a049;
+}
+
+.btn-danger {
+  background: #f44336;
+  color: white;
+}
+
+.btn-danger:hover:not(:disabled) {
+  background: #d32f2f;
+}
+
+.timer-control {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.timer-control label {
+  font-weight: 600;
+  color: #333;
+  font-size: 14px;
+}
+
+.timer-input-group {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.timer-input {
+  padding: 10px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  font-size: 16px;
+  width: 120px;
+  font-weight: 600;
+}
+
+.timer-input:focus {
+  outline: none;
+  border-color: #2196f3;
+}
+
+.timer-btn {
+  padding: 10px 20px;
+  background: #2196f3;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+
+.timer-btn:hover {
+  background: #1976d2;
+}
+
+.timer-hint {
+  font-size: 13px;
+  color: #666;
+  font-style: italic;
+}
+
+@media (max-width: 768px) {
+  .team-section {
+    grid-template-columns: 1fr;
+  }
+  
+  .control-buttons {
+    flex-direction: column;
+  }
+  
+  .btn {
+    width: 100%;
+  }
+}
+

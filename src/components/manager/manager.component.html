@@ -1,0 +1,135 @@
+<div class="wrap">
+  <div class="header-row">
+    <h1>🎯 Competition Manager</h1>
+    <a routerLink="/score" class="score-link" target="_blank">📊 View Score Page</a>
+  </div>
+
+  <div class="row">
+    <div class="card">
+      <div class="title">Connection Status</div>
+      <div class="value" [class.ok]="connected()" [class.bad]="!connected()">
+        {{ connected() ? '✅ Connected' : '❌ Disconnected' }}
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="title">Scores</div>
+      <div class="score-display">
+        <div class="score-item">
+          <span class="team-label">Team A:</span>
+          <button class="score-btn minus" (click)="setScore('A', state().scores.A - 1)">-</button>
+          <span class="score-value">{{state().scores.A}}</span>
+          <button class="score-btn plus" (click)="setScore('A', state().scores.A + 1)">+</button>
+        </div>
+        <div class="score-item">
+          <span class="team-label">Team B:</span>
+          <button class="score-btn minus" (click)="setScore('B', state().scores.B - 1)">-</button>
+          <span class="score-value">{{state().scores.B}}</span>
+          <button class="score-btn plus" (click)="setScore('B', state().scores.B + 1)">+</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Team Management -->
+  <div class="card">
+    <div class="title">👥 Team Management</div>
+    
+    <div class="team-section">
+      <div class="team-column">
+        <h3>Team A</h3>
+        <div class="member-list">
+          <div class="member-item" *ngFor="let member of getTeamMembers('A')">
+            <span class="member-name">{{member.name}}</span>
+            <a [href]="getPlayerUrl('A', member.name)" target="_blank" class="link-btn">🔗 Link</a>
+          </div>
+          <div class="empty" *ngIf="getTeamMembers('A').length === 0">No members yet</div>
+        </div>
+      </div>
+
+      <div class="team-column">
+        <h3>Team B</h3>
+        <div class="member-list">
+          <div class="member-item" *ngFor="let member of getTeamMembers('B')">
+            <span class="member-name">{{member.name}}</span>
+            <a [href]="getPlayerUrl('B', member.name)" target="_blank" class="link-btn">🔗 Link</a>
+          </div>
+          <div class="empty" *ngIf="getTeamMembers('B').length === 0">No members yet</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hint">
+      💡 Players should visit the player page, select their team, and enter their name to join automatically. Share the player link with them!
+    </div>
+  </div>
+
+  <!-- Timer Settings -->
+  <div class="card">
+    <div class="title">⏱️ Timer Settings</div>
+    <div class="timer-control">
+      <label>Answer Time Limit (seconds):</label>
+      <div class="timer-input-group">
+        <input 
+          type="number" 
+          [(ngModel)]="timerDuration" 
+          min="1" 
+          max="300" 
+          class="timer-input"
+          (blur)="setTimer()"
+          (keyup.enter)="setTimer()">
+        <button (click)="setTimer()" class="timer-btn">Set</button>
+      </div>
+      <div class="timer-hint">Current: {{ state().timerDuration }}s</div>
+    </div>
+  </div>
+
+  <!-- Game Control -->
+  <div class="card">
+    <div class="title">🎮 Game Control</div>
+
+    <div class="round-status" *ngIf="!state().current">
+      <div class="status-text">No active turn</div>
+      <div class="buzz-status" [class.enabled]="state().buzzEnabled">
+        Buzz: {{ state().buzzEnabled ? 'ENABLED' : 'DISABLED' }}
+      </div>
+    </div>
+
+    <div class="round-status" *ngIf="state().current as c">
+      <div class="current-turn">
+        <div class="turn-team">Team {{c.team}}</div>
+        <div class="turn-name-wrapper">
+          <span class="turn-name-highlight">{{c.name}}</span>
+          <span class="turn-name-text"> is answering</span>
+        </div>
+        <div class="time-left">⏱️ {{ timeLeft() }}s left</div>
+      </div>
+    </div>
+
+    <div class="control-buttons">
+      <button 
+        (click)="enableBuzz()" 
+        [disabled]="!!state().current"
+        class="btn btn-primary">
+        Enable Buzz
+      </button>
+      <button 
+        (click)="reset()" 
+        class="btn btn-secondary">
+        Reset Round
+      </button>
+      <button 
+        (click)="correct()" 
+        [disabled]="!state().current"
+        class="btn btn-success">
+        ✅ Correct (+1)
+      </button>
+      <button 
+        (click)="wrong()" 
+        [disabled]="!state().current"
+        class="btn btn-danger">
+        ❌ Wrong
+      </button>
+    </div>
+  </div>
+</div>

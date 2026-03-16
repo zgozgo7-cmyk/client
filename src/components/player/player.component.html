@@ -1,0 +1,116 @@
+<div class="wrap">
+  <h1>🎮 Player</h1>
+
+  <!-- Registration Form -->
+  <div class="card" *ngIf="!isRegistered()">
+    <div class="title">Join the Game</div>
+    <div class="register-form">
+      <div class="form-group">
+        <label>Select Your Team</label>
+        <select [(ngModel)]="team" class="team-select">
+          <option value="A">Team A</option>
+          <option value="B">Team B</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Enter Your Name</label>
+        <input
+          type="text"
+          [(ngModel)]="name"
+          placeholder="Your name"
+          class="name-input"
+          (keyup.enter)="register()"
+          maxlength="20"
+        />
+      </div>
+
+      <button
+        (click)="register()"
+        class="register-btn"
+        [disabled]="!name().trim()"
+      >
+        Join Game
+      </button>
+    </div>
+  </div>
+
+  <!-- Player Interface -->
+  <div *ngIf="isRegistered()" class="player-shell" [ngClass]="backgroundClass()">
+    <!-- Scores at top -->
+    <div class="score-bar">
+      <div class="score-pill team-a">
+        <span class="label">Team A</span>
+        <span class="value">{{state().scores.A}}</span>
+      </div>
+      <div class="score-pill team-b">
+        <span class="label">Team B</span>
+        <span class="value">{{state().scores.B}}</span>
+      </div>
+    </div>
+
+    <!-- Turn / buzz status -->
+    <div class="status-bar" *ngIf="state().current as c">
+      <ng-container *ngIf="isMeResponding(); else waiting">
+        <span class="status-chip good">Your turn — {{ timeLeft() }}s</span>
+      </ng-container>
+      <ng-template #waiting>
+        <span class="status-chip">
+          {{ c.team }} · {{ c.name }} — {{ timeLeft() }}s
+        </span>
+      </ng-template>
+    </div>
+    <div class="status-bar" *ngIf="!state().current">
+      <span class="status-chip" [class.good]="state().buzzEnabled" [class.bad]="!state().buzzEnabled">
+        {{ state().buzzEnabled ? 'Buzz enabled' : 'Wait for manager' }}
+      </span>
+    </div>
+
+    <!-- Spacer to center button vertically -->
+    <div class="flex-spacer"></div>
+
+    <!-- Big round 3D button centered -->
+    <div class="buzz-center">
+      <div class="button-container">
+        <!-- Metallic base -->
+        <div class="metallic-base"></div>
+        <!-- Circular progress indicator -->
+        <svg class="progress-ring" *ngIf="state().current" width="320" height="320">
+          <circle
+            class="progress-ring-circle"
+            [attr.stroke-dasharray]="circumference()"
+            [attr.stroke-dashoffset]="getProgressOffset()"
+            [attr.stroke]="getProgressColor()"
+            fill="transparent"
+            stroke-width="8"
+            r="156"
+            cx="160"
+            cy="160"
+            transform="rotate(-90 160 160)"/>
+        </svg>
+        <!-- Glossy button -->
+        <button 
+          class="buzz-btn"
+          (click)="buzz()"
+          [disabled]="!canBuzz()"
+          [class.disabled]="!canBuzz()"
+          [class.enabled]="canBuzz()"
+          [class.has-timer]="!!state().current">
+          <span class="buzz-text">BUZZ</span>
+          <span class="buzz-hint" *ngIf="!canBuzz()">
+            {{ !connected() ? 'Connecting...' : 
+               !state().buzzEnabled ? 'Wait' : 
+               state().current ? 'Hold' : 
+               'Ready' }}
+          </span>
+          <span class="timer-display" *ngIf="state().current">
+            {{ timeLeft() }}s
+          </span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Spacer to balance layout -->
+    <div class="flex-spacer"></div>
+  </div>
+</div>

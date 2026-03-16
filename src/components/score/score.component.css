@@ -1,0 +1,223 @@
+.score-page {
+  font-family: system-ui, -apple-system, sans-serif;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.score-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.score-header h1 {
+  font-size: 64px;
+  color: white;
+  margin: 0 0 16px 0;
+  text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  font-weight: 900;
+}
+
+.connection-status {
+  font-size: 18px;
+  font-weight: 600;
+  padding: 8px 20px;
+  border-radius: 20px;
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  backdrop-filter: blur(10px);
+}
+
+.connection-status.connected {
+  background: rgba(76, 175, 80, 0.3);
+}
+
+.connection-status.disconnected {
+  background: rgba(244, 67, 54, 0.3);
+}
+
+.scores-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 60px;
+  margin-bottom: 60px;
+  flex-wrap: wrap;
+}
+
+.score-card {
+  background: white;
+  border-radius: 24px;
+  padding: 40px 60px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  min-width: 280px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.score-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.4);
+}
+
+.team-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.team-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+  font-weight: 900;
+  color: white;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.team-a-card .team-icon {
+  background: linear-gradient(135deg, #1e88e5, #1565c0);
+}
+
+.team-b-card .team-icon {
+  background: linear-gradient(135deg, #e53935, #c62828);
+}
+
+.team-label {
+  font-size: 24px;
+  font-weight: 700;
+  color: #333;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.score-value-large {
+  font-size: 120px;
+  font-weight: 900;
+  line-height: 1;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.team-a-card .score-value-large {
+  background: linear-gradient(135deg, #1e88e5, #1565c0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.team-b-card .score-value-large {
+  background: linear-gradient(135deg, #e53935, #c62828);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.vs-divider {
+  font-size: 48px;
+  font-weight: 900;
+  color: white;
+  text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  padding: 0 20px;
+}
+
+.current-turn-info {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 16px;
+  padding: 24px 40px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
+}
+
+.turn-label {
+  font-size: 16px;
+  color: #666;
+  font-weight: 600;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.responder-name {
+  font-size: 36px;
+  font-weight: 900;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.responder-team {
+  font-size: 20px;
+  color: #666;
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .score-header h1 {
+    font-size: 48px;
+  }
+
+  .scores-container {
+    gap: 30px;
+  }
+
+  .score-card {
+    padding: 30px 40px;
+    min-width: 200px;
+  }
+
+  .score-value-large {
+    font-size: 80px;
+  }
+
+  .vs-divider {
+    font-size: 36px;
+  }
+
+  .responder-name {
+    font-size: 28px;
+  }
+}
+
+@media (max-width: 480px) {
+  .score-page {
+    padding: 20px 16px;
+  }
+
+  .score-header h1 {
+    font-size: 36px;
+  }
+
+  .scores-container {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .vs-divider {
+    font-size: 24px;
+    padding: 10px 0;
+  }
+
+  .score-card {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .score-value-large {
+    font-size: 64px;
+  }
+}
+
